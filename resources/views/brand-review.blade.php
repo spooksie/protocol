@@ -342,7 +342,7 @@ a{color:inherit}
 .cb .if-c{animation:if-spin-b 1.8s cubic-bezier(.55,0,.2,1)}
 @keyframes if-spin-a{0%{transform:none}50%{transform:rotate(180deg) scale(1.05)}100%{transform:rotate(360deg)}}
 @keyframes if-spin-b{0%{transform:none}50%{transform:rotate(180deg) scale(1.05)}100%{transform:rotate(360deg)}}
-.if-pulse{fill:none;stroke:var(--acc);stroke-width:2px;opacity:0;animation:if-lock .8s ease-out 1.85s}
+.if-pulse{fill:none;stroke:var(--acc);stroke-width:2px;opacity:0;transform-box:fill-box;transform-origin:center;animation:if-lock .8s ease-out 1.85s}
 @keyframes if-lock{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.4)}}
 .ca .if-pulse{animation:if-lock-a .8s ease-out 1.7s}
 .cb .if-pulse{animation:if-lock-b .8s ease-out 1.7s}
