@@ -1,0 +1,123 @@
+<!doctype html>
+<!--
+  Protocol.com social image (1200×630). Render to public/og-image.png with headless Chrome:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
+    --force-device-scale-factor=1 --use-angle=swiftshader --enable-unsafe-swiftshader \
+    --window-size=1200,630 --virtual-time-budget=6000 \
+    --screenshot=/abs/path/public/og-image.png file:///abs/path/resources/og/og-image.html
+  The P is the landing page's 3D Lattice, drawn once with bloom; the text is real copy from the page.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Protocol.com social image</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@600&amp;family=Red+Hat+Mono:wght@500&amp;display=swap">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<style>
+html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#060A14;color:#E7EEF8}
+canvas{position:absolute;inset:0;width:1200px;height:630px;display:block}
+.copy{position:absolute;left:72px;top:64px;width:600px}
+.lockup{display:flex;align-items:center;gap:16px;font:600 22px/1 'Red Hat Display',sans-serif;letter-spacing:.32em}
+.lockup svg{height:44px;width:auto;overflow:visible;filter:drop-shadow(0 0 6px rgba(79,209,255,.5))}
+h1{margin:118px 0 0;font:600 66px/1.04 'Red Hat Display',sans-serif;letter-spacing:-.026em}
+h1 em{font-style:normal;color:#4FD1FF;white-space:nowrap;text-shadow:0 0 30px rgba(79,209,255,.55)}
+.facts{margin:34px 0 0;font:500 17px/1.5 'Red Hat Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#96A3B8}
+.facts b{color:#4FD1FF;font-weight:500}
+.ruler{position:absolute;left:72px;right:72px;bottom:46px;display:grid;grid-template-columns:repeat(32,1fr);height:16px;font:500 12px/1 'Red Hat Mono',monospace;color:#96A3B8}
+.ruler span{border-left:1px solid rgba(156,203,255,.22);padding:0 0 0 5px}
+.ruler span.bd{border-left-color:#4FD1FF}
+.ruler span:last-child{border-right:1px solid rgba(156,203,255,.22);text-align:right;padding:0 5px 0 0}
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<div class="copy">
+  <div class="lockup">
+    <svg viewBox="30 2 146 192" aria-hidden="true"><path d="M49 176.7 L49 135.4 M49 135.4 L49 94.8 M49 94.8 L49 51.9 M49 51.9 L49 9 M49 9 L84.2 9 M84.2 9 L119.4 9 M119.4 9 L153.6 21.6 M153.6 21.6 L167.8 51.9 M167.8 51.9 L153.6 82.3 M153.6 82.3 L119.4 94.8 M119.4 94.8 L84.2 94.8 M84.2 94.8 L49 94.8" fill="none" stroke="#5F8FD6" stroke-width="5" stroke-linecap="round" opacity=".7"/><path d="M40 183.7 L40 142.4 M40 142.4 L40 101.8 M40 101.8 L40 58.9 M40 58.9 L40 16 M40 16 L75.2 16 M75.2 16 L110.4 16 M110.4 16 L144.6 28.6 M144.6 28.6 L158.8 58.9 M158.8 58.9 L144.6 89.3 M144.6 89.3 L110.4 101.8 M110.4 101.8 L75.2 101.8 M75.2 101.8 L40 101.8" fill="none" stroke="#9CCBFF" stroke-width="10" stroke-linecap="round"/><g fill="#9CCBFF" stroke="#060A14" stroke-width="3.5"><circle cx="40" cy="183.7" r="9.5"/><circle cx="40" cy="142.4" r="9.5"/><circle cx="40" cy="101.8" r="9.5"/><circle cx="40" cy="58.9" r="9.5"/><circle cx="40" cy="16" r="9.5"/><circle cx="75.2" cy="16" r="9.5"/><circle cx="110.4" cy="16" r="9.5"/><circle cx="144.6" cy="28.6" r="9.5"/><circle cx="158.8" cy="58.9" r="9.5"/><circle cx="144.6" cy="89.3" r="9.5"/><circle cx="110.4" cy="101.8" r="9.5"/><circle cx="75.2" cy="101.8" r="9.5"/></g></svg>
+    PROTOCOL
+  </div>
+  <h1>Protocol.com is an <em>elite-level</em> .com domain.</h1>
+  <p class="facts">Owned by <b>Coherence.com</b><br>team@coherence.com</p>
+</div>
+<div class="ruler" id="ruler"></div>
+<script>
+  const r = document.getElementById('ruler');
+  for (let b = 0; b < 32; b++) { const s = document.createElement('span'); if ([0, 14, 23].includes(b)) s.className = 'bd'; s.textContent = [0, 8, 16, 24, 31].includes(b) ? b : ''; r.appendChild(s); }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const W = 1200, H = 630;
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('c'), antialias: false, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H, false);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.setClearColor('#060A14', 1);
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(35, W / H, .1, 400);
+const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, samples: 4 }));
+composer.addPass(new RenderPass(scene, cam));
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(W, H), 1.1, .5, .42));
+composer.addPass(new OutputPass());
+scene.add(new THREE.AmbientLight('#8fb3ff', .7));
+const key = new THREE.DirectionalLight('#ffffff', 2.4); key.position.set(12, 16, 24); scene.add(key);
+const fill = new THREE.PointLight('#4FD1FF', 110, 0, 2); fill.position.set(5.6, 3.2, 8.8); scene.add(fill);
+
+const P2 = [[-.6,-1.15],[-.6,-.62],[-.6,-.1],[-.6,.45],[-.6,1],[-.2,1],[.2,1],[.589,.839],[.75,.45],[.589,.061],[.2,-.1],[-.2,-.1]];
+const CHAIN = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11],[11,2]];
+const N = 12, S = 4.72, OX = -.08, Z = 1.36, UP = new THREE.Vector3(0, 1, 0);
+const P = new THREE.Group(); P.rotation.set(.1, -.32, 0); scene.add(P);
+const nodes = [];
+[[0, Z], [1, -Z]].forEach(([layer, z]) => P2.forEach(([x, y], k) => nodes.push({ p: new THREE.Vector3((x + OX) * S, y * S, z), k, layer })));
+const edges = [];
+CHAIN.forEach(([a, b]) => { edges.push([a, b, 0]); edges.push([a + N, b + N, 0]); });
+for (let i = 0; i < N; i++) edges.push([i, i + N, 1]);
+CHAIN.forEach(([a, b]) => edges.push([a, b + N, 1]));
+const thickMat = new THREE.MeshStandardMaterial({ color: '#86A8DA', emissive: '#1E3E78', metalness: .55, roughness: .3 });
+const thinMat = new THREE.MeshStandardMaterial({ color: '#4D6A96', emissive: '#14294F', metalness: .5, roughness: .45 });
+const thickGeo = new THREE.CylinderGeometry(.088, .088, 1, 14), thinGeo = new THREE.CylinderGeometry(.036, .036, 1, 8);
+const rod = (A, B, geo, mat) => {
+  const d = B.clone().sub(A), m = new THREE.Mesh(geo, mat);
+  m.position.copy(A).addScaledVector(d, .5); m.scale.set(1, d.length(), 1);
+  m.quaternion.setFromUnitVectors(UP, d.normalize()); P.add(m);
+};
+edges.forEach(([a, b, kind]) => rod(nodes[a].p, nodes[b].p, kind ? thinGeo : thickGeo, kind ? thinMat : thickMat));
+const trailMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#4FD1FF').multiplyScalar(2.2) });
+const trailGeo = new THREE.CylinderGeometry(.13, .13, 1, 14);
+[0,1,2,3,4,5,6,7,8,9,10,11,2].reduce((a, b) => { rod(nodes[a].p, nodes[b].p, trailGeo, trailMat); return b; });
+const nodeGeo = new THREE.SphereGeometry(.29, 28, 18);
+nodes.forEach(n => {
+  const m = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: n.layer ? '#5F8FD6' : new THREE.Color('#7FE0FF').multiplyScalar(1.7) }));
+  m.position.copy(n.p); P.add(m);
+});
+const you = new THREE.Mesh(new THREE.SphereGeometry(.34, 24, 16), new THREE.MeshBasicMaterial({ color: new THREE.Color('#E6FBFF').multiplyScalar(3.2) }));
+you.position.copy(nodes[2].p); P.add(you);
+
+/* ambient network */
+let s = 20261009; const R = () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+const pts = [];
+while (pts.length < 220) {
+  const v = new THREE.Vector3((R() * 2 - 1) * 42, (R() * 2 - 1) * 25 + 2, 8 - R() * 64);
+  if (Math.abs(v.x - .5) < 8 && v.y > -8.5 && v.y < 14 && v.z > -11 && v.z < 4.5) continue;
+  pts.push(v);
+}
+const seg = [];
+pts.forEach((p, i) => pts.map((q, j) => [j, p.distanceToSquared(q)]).filter(([j]) => j !== i).sort((a, b) => a[1] - b[1]).slice(0, 3).forEach(([j, d2], k) => { if (k === 0 || d2 < 225) seg.push(p, pts[j]); }));
+const fog = d => Math.exp(-.0105 * .0105 * d * d);
+scene.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(seg), new THREE.LineBasicMaterial({ color: '#24457E', transparent: true, opacity: .5 })));
+const dotGeo = new THREE.SphereGeometry(.09, 10, 8);
+pts.forEach((p, i) => { const m = new THREE.Mesh(dotGeo, new THREE.MeshBasicMaterial({ color: i % 9 ? '#4A73B4' : '#A9D2FF', transparent: true, opacity: fog(40 - p.z) })); m.position.copy(p); m.scale.setScalar(i % 9 ? 1 : 2); scene.add(m); });
+
+/* frame the P on the right third */
+cam.position.set(-1.2, 1.1, 30); cam.lookAt(-.02, -.35, 0);
+cam.setViewOffset(W, H, -.25 * W, 0, W, H);
+const draw = () => composer.render();
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { draw(); requestAnimationFrame(draw); document.title = 'ready'; });
+</script>
+</body>
+</html>
