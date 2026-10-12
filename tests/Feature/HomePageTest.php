@@ -92,7 +92,7 @@ it('keeps the private brand review out of public discovery files', function () {
 it('shows the Booth.com Ltd footer with the Coherence and QQuantum credits', function () {
     $this->get('/')
         ->assertSee('Booth.com Ltd. All Rights Reserved.', false)
-        ->assertSee('https://qquantum.ai/creative-design/brand-identity-logos', false)
+        ->assertSee('https://qquantum.ai/creative-design', false)
         ->assertSee('Designed &amp; built by', false)
         ->assertSee('https://coherence.com', false)
         ->assertSee('title="Coherence — ethical, human-centred AI across sound, education and consciousness"', false);

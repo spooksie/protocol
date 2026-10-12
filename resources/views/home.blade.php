@@ -829,7 +829,7 @@ main,.foot{position:relative;z-index:2}
         <div class="foot-bottom">
             <p>&copy;{{ date('Y') }} Booth.com Ltd. All Rights Reserved.</p>
             <div class="credits">
-                <a href="https://qquantum.ai/creative-design/brand-identity-logos" target="_blank" rel="noopener" title="QQuantum.ai — brand identity, logo and web design by an AI systems engineering studio in Barcelona">
+                <a href="https://qquantum.ai/creative-design" target="_blank" rel="noopener" title="QQuantum.ai — brand identity, logo and web design by an AI systems engineering studio in Barcelona">
                     <span>Designed &amp; built by</span>
                     {!! $qquantum !!}
                 </a>
