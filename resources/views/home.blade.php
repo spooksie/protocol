@@ -84,8 +84,8 @@
                 '@type' => 'Organization', '@id' => 'https://coherence.com/#organization', 'name' => 'Coherence', 'legalName' => 'Booth.com Ltd', 'url' => 'https://coherence.com/', 'email' => $email,
                 'contactPoint' => ['@type' => 'ContactPoint', 'contactType' => 'customer support', 'email' => $email],
             ],
-            ['@type' => 'Organization', '@id' => 'https://qquantum.ai/#organization', 'name' => 'QQuantum.ai', 'url' => 'https://qquantum.ai/', 'description' => 'AI systems engineering studio in Barcelona — brand identity, logo and web design, AI agents and custom AI systems.'],
-            ['@type' => 'WebPage', '@id' => $url.'#webpage', 'url' => $url, 'name' => $title, 'description' => $description, 'isPartOf' => ['@id' => $url.'#website'], 'inLanguage' => 'en', 'primaryImageOfPage' => ['@type' => 'ImageObject', 'url' => $ogImage, 'width' => 1200, 'height' => 630]],
+            ['@type' => 'Organization', '@id' => 'https://qquantum.ai/#organization', 'name' => 'QQuantum.ai', 'url' => 'https://qquantum.ai/', 'description' => 'AI systems engineering studio in Barcelona — domain landing pages, brand identity, logo and web design, AI agents and custom AI systems.', 'makesOffer' => ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Domain landing pages', 'url' => 'https://qquantum.ai/creative-design/domain-landing-pages']]],
+            ['@type' => 'WebPage', '@id' => $url.'#webpage', 'url' => $url, 'name' => $title, 'description' => $description, 'isPartOf' => ['@id' => $url.'#website'], 'inLanguage' => 'en', 'creator' => ['@id' => 'https://qquantum.ai/#organization'], 'primaryImageOfPage' => ['@type' => 'ImageObject', 'url' => $ogImage, 'width' => 1200, 'height' => 630]],
             [
                 '@type' => 'FAQPage', '@id' => $url.'#faq',
                 'mainEntity' => array_map(fn ($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]], $faqs),
@@ -829,7 +829,7 @@ main,.foot{position:relative;z-index:2}
         <div class="foot-bottom">
             <p>&copy;{{ date('Y') }} Booth.com Ltd. All Rights Reserved.</p>
             <div class="credits">
-                <a href="https://qquantum.ai/creative-design" target="_blank" rel="noopener" title="QQuantum.ai — brand identity, logo and web design by an AI systems engineering studio in Barcelona">
+                <a href="https://qquantum.ai/creative-design/domain-landing-pages" target="_blank" rel="noopener" title="QQuantum.ai — domain landing pages, brand identity and web design by an AI systems engineering studio in Barcelona">
                     <span>Designed &amp; built by</span>
                     {!! $qquantum !!}
                 </a>

@@ -21,3 +21,7 @@ Cybersecurity, networking and telecoms, blockchain and crypto, AI and agents, so
 ## Pages
 
 - [Protocol.com home](https://protocol.com/): the facts as a TCP handshake, the six meanings of the word, use cases by industry as a routing table, FAQ and contact
+
+## Credits
+
+- Landing page designed and built by QQuantum.ai: https://qquantum.ai/creative-design/domain-landing-pages
