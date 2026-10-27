@@ -18,7 +18,7 @@ it('is indexable and carries structured data for search engines and LLMs', funct
         ->toContain('<link rel="canonical" href="https://protocol.com/">')
         ->toContain('<link rel="alternate" type="text/plain" href="/llms.txt"')
         ->toContain('"@type":"FAQPage"')
-        ->toContain('"legalName":"Booth.com Ltd"')
+        ->not->toContain('Booth.com')
         ->toContain('"publisher":{"@id":"https://coherence.com/#organization"}')
         ->not->toContain('noindex')
         ->not->toContain('"@type":"Product"');
@@ -89,9 +89,10 @@ it('keeps the private brand review out of public discovery files', function () {
         ->and(file_get_contents(public_path('sitemap.xml')))->toContain('<loc>https://protocol.com/</loc>');
 });
 
-it('shows the Booth.com Ltd footer with the Coherence and QQuantum credits', function () {
+it('shows the Coherence footer with the Coherence and QQuantum credits', function () {
     $this->get('/')
-        ->assertSee('Booth.com Ltd. All Rights Reserved.', false)
+        ->assertSee('Coherence. All Rights Reserved.', false)
+        ->assertDontSee('Booth.com', false)
         ->assertSee('href="https://qquantum.ai/creative-design/domain-landing-pages"', false)
         ->assertSee('"url":"https://qquantum.ai/creative-design/domain-landing-pages"', false)
         ->assertSee('Designed &amp; built by', false)
